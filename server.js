@@ -25,6 +25,7 @@ async function inicio() {
     }
 }
 
+// [DEBUG]
 inicio();
 
 app.get('/', (req, res) => {
