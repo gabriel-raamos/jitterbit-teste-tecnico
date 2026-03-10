@@ -5,9 +5,9 @@ import orderRoutes from './orderRoutes.js';
 const router = Router();
 
 // Rotas públicas
-app.use('/auth', authRoutes);
+router.use('/auth', authRoutes);
 
 // Rotas protegidas pela autenticação
-app.use('/order', orderRoutes);
+router.use('/order', orderRoutes);
 
 export default router;

@@ -1,8 +1,7 @@
 import 'dotenv/config';
 import db from './config/database.js'
 import express from 'express';
-import authRoutes from './routes/authRoutes.js'
-import orderRoutes from './routes/orderRoutes.js'
+import indexRoutes from './routes/indexRoutes.js'
 
 const app = express();
 app.use(express.json());
@@ -32,10 +31,8 @@ app.get('/', (req, res) => {
     res.json({ message: 'Jitterbit Order API está online.' });
 });
 
-// ROTAS PÚBLICAS
-app.use('/auth', authRoutes);
-// ROTAS PROTEGIDAS
-app.use('/order', orderRoutes);
+// ROTAS
+app.use('/', indexRoutes);
 
 app.use((req, res) => {
     res.status(404).json({ error: 'Rota não encontrada.' });

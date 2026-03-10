@@ -16,7 +16,7 @@ export function login(req, res) {
         { expiresIn: process.env.JWT_EXPIRES_IN }
     );
 
-    return res.status().json({
+    return res.status(200).json({
         message: 'Login realizados com sucesso',
         token
     });
