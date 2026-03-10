@@ -2,6 +2,8 @@
 
 Projeto de REST API feita com Node + MySQL. Se baseia no gerenciamento de pedidos.
 
+---
+
 ## Observação
 
 Até o momento, todos os projetos em que fiz parte tiveram a documentação escrita utilizando arquivos markdown. Já havia sido introduzido ao Swagger anteriormente, mas devido à experiência esse caminho pareceu mais confiável.
