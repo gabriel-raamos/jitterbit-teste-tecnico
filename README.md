@@ -1,6 +1,10 @@
 # Jitterbit - Teste técnico
 
-Projeto de REST API  feita com Node + MySQL. Se baseia no gerenciamento de pedidos.
+Projeto de REST API feita com Node + MySQL. Se baseia no gerenciamento de pedidos.
+
+## Observação
+
+Até o momento, todos os projetos em que fiz parte tiveram a documentação escrita utilizando arquivos markdown. Já havia sido introduzido ao Swagger anteriormente, mas devido à experiência esse caminho pareceu mais confiável.
 
 ---
 
@@ -14,13 +18,11 @@ Projeto de REST API  feita com Node + MySQL. Se baseia no gerenciamento de pedid
 ## Setup
 
 ```bash
-# clone o repositório
+# Clone o repositório
 git clone https://github.com/gabriel-raamos/jitterbit-teste-tecnico.git
 cd jitterbit-teste-tecnico
-```
 
-```bash
-# instale as dependências
+# Instale as dependências
 npm install
 ```
 
@@ -32,18 +34,18 @@ Copie o arquivo de exemplo e preencha com seus dados:
 cp .env.example .env
 ```
 
-| Variável        | Descrição                              | Exemplo                  |
-|-----------------|----------------------------------------|--------------------------|
-| `PORT`          | Porta onde a API irá rodar             | `3000`                   |
-| `DB_HOST`       | Host do banco de dados                 | `localhost`              |
-| `DB_PORT`       | Porta do MySQL                         | `3306`                   |
-| `DB_USER`       | Usuário do MySQL                       | `root`                   |
-| `DB_PASSWORD`   | Senha do MySQL                         | `sua_senha`              |
-| `DB_NAME`       | Nome do banco de dados                 | `jitterbit_orders`       |
-| `JWT_SECRET`    | Chave secreta para assinar os tokens   | `segredo_forte_aqui`     |
-| `JWT_EXPIRES_IN`| Tempo de expiração do token            | `'8h' ou milissegundos`                     |
-| `API_USERNAME`  | Usuário para login na API              | `admin`                  |
-| `API_PASSWORD`  | Senha para login na API                | `senha123`               |
+| Variável         | Descrição                            | Exemplo                   |
+|------------------|--------------------------------------|---------------------------|
+| `PORT`           | Porta onde a API irá rodar           | `3000`                    |
+| `DB_HOST`        | Host do banco de dados               | `localhost`               |
+| `DB_PORT`        | Porta do MySQL                       | `3306`                    |
+| `DB_USER`        | Usuário do MySQL                     | `root`                    |
+| `DB_PASSWORD`    | Senha do MySQL                       | `sua_senha`               |
+| `DB_NAME`        | Nome do banco de dados               | `jitterbit_orders`        |
+| `JWT_SECRET`     | Chave secreta para assinar os tokens | `segredo_forte_aqui`      |
+| `JWT_EXPIRES_IN` | Tempo de expiração do token          | `8h` ou milissegundos     |
+| `API_USERNAME`   | Usuário para login na API            | `admin`                   |
+| `API_PASSWORD`   | Senha para login na API              | `senha123`                |
 
 ---
 
@@ -58,21 +60,21 @@ mysql -u root -p < config/criarbanco.sql
 Isso criará as seguintes tabelas:
 
 **Order**
-| Coluna         | Tipo           | Descrição              |
-|----------------|----------------|------------------------|
-| `id`           | INT (PK)       | ID interno auto-increment |
-| `orderId`      | VARCHAR(100)   | Número único do pedido |
-| `value`        | DECIMAL(12,2)  | Valor total do pedido  |
-| `creationDate` | DATETIME       | Data de criação        |
+| Coluna         | Tipo          | Descrição                  |
+|----------------|---------------|----------------------------|
+| `id`           | INT (PK)      | ID interno auto-increment  |
+| `orderId`      | VARCHAR(100)  | Número único do pedido     |
+| `value`        | DECIMAL(12,2) | Valor total do pedido      |
+| `creationDate` | DATETIME      | Data de criação            |
 
 **Items**
-| Coluna      | Tipo          | Descrição                        |
-|-------------|---------------|----------------------------------|
-| `id`        | INT (PK)      | ID interno auto-increment        |
-| `orderId`   | VARCHAR(100)  | Referência ao pedido (FK)        |
-| `productId` | INT           | ID do produto                    |
-| `quantity`  | INT           | Quantidade                       |
-| `price`     | DECIMAL(12,2) | Preço unitário                   |
+| Coluna      | Tipo          | Descrição                 |
+|-------------|---------------|---------------------------|
+| `id`        | INT (PK)      | ID interno auto-increment |
+| `orderId`   | VARCHAR(100)  | Referência ao pedido (FK) |
+| `productId` | INT           | ID do produto             |
+| `quantity`  | INT           | Quantidade                |
+| `price`     | DECIMAL(12,2) | Preço unitário            |
 
 ---
 
@@ -254,8 +256,8 @@ curl http://localhost:3000/order/list \
 Retorna os dados de um pedido específico.
 
 **Parâmetro de URL:**
-| Parâmetro | Tipo   | Descrição             |
-|-----------|--------|-----------------------|
+| Parâmetro | Tipo   | Descrição              |
+|-----------|--------|------------------------|
 | `orderId` | string | Número único do pedido |
 
 **Resposta de sucesso — `200 OK`:**
@@ -394,11 +396,10 @@ curl -X DELETE http://localhost:3000/order/v10089015vdb-01 \
 ## Estrutura do projeto
 
 ```
-src/
+jitterbit-teste-tecnico/
 ├── config/
 │   ├── database.js          # Pool de conexão MySQL
-│   ├── migrate.sql          # Script de criação das tabelas
-│   └── swagger.js           # Configuração do Swagger/OpenAPI
+│   └── criarbanco.sql       # Script de criação das tabelas
 ├── controllers/
 │   ├── authController.js    # Login e geração de token JWT
 │   └── orderController.js   # CRUD de pedidos
@@ -409,7 +410,9 @@ src/
 ├── routes/
 │   ├── authRoutes.js        # Rotas de autenticação
 │   └── orderRoutes.js       # Rotas de pedidos (protegidas)
-├── app.js                   # Configuração do Express
+├── .env.example             # Modelo de variáveis de ambiente
+├── .gitignore
+├── package.json
 └── server.js                # Ponto de entrada da aplicação
 ```
 
@@ -419,11 +422,11 @@ src/
 
 A API recebe os dados em português e os transforma antes de salvar no banco:
 
-| Campo recebido (input)    | Campo no banco (output) |
-|---------------------------|-------------------------|
-| `numeroPedido`            | `orderId`               |
-| `valorTotal`              | `value`                 |
-| `dataCriacao`             | `creationDate`          |
-| `items[].idItem`          | `productId`             |
-| `items[].quantidadeItem`  | `quantity`              |
-| `items[].valorItem`       | `price`                 |
+| Campo recebido (input)   | Campo no banco (output) |
+|--------------------------|-------------------------|
+| `numeroPedido`           | `orderId`               |
+| `valorTotal`             | `value`                 |
+| `dataCriacao`            | `creationDate`          |
+| `items[].idItem`         | `productId`             |
+| `items[].quantidadeItem` | `quantity`              |
+| `items[].valorItem`      | `price`                 |
